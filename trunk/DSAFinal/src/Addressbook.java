@@ -6,7 +6,10 @@ public class Addressbook {
 	private BinarySearchTree entries;
 	
 	public Addressbook(){
-		entries = new BinarySearchTree();
+		if(SerializationHandler.deserialize() == null)
+			entries = new BinarySearchTree();
+		else
+			entries = SerializationHandler.deserialize();
 	}
 	
 	public AddressEntry getEntry(){
@@ -43,8 +46,15 @@ public class Addressbook {
 		return (AddressEntry)entries.find(new AddressEntry(name, null, null));
 	}
 	
+	public void save() {
+		SerializationHandler.serialize(entries);
+	}
+	
 	public static void main(String args[])
 	{
+		int a = 5;
+		int b = 4;
+		int c = 7;
 		
 		Addressbook book = new Addressbook();
 		book.addNewEntry("Tom Renn", "732", "24 mirta");
