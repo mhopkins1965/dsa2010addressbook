@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
 // BinarySearchTree class
 //
@@ -21,8 +22,7 @@ import java.util.ArrayList;
  * Note that all "matching" is based on the compareTo method.
  * @author Mark Allen Weiss
  */
-@SuppressWarnings("unchecked")
-public class BinarySearchTree {
+public class BinarySearchTree implements Serializable {
     /**
      * Construct the tree.
      */
@@ -62,7 +62,7 @@ public class BinarySearchTree {
      * @param x the item to remove.
      * @throws ItemNotFoundException if x is not found.
      */
-	public void remove( Comparable x ) throws ItemNotFoundException {
+    public void remove( Comparable x ) throws ItemNotFoundException {
         root = remove( x, root );
     }
     
@@ -263,8 +263,8 @@ public class BinarySearchTree {
 // Basic node stored in unbalanced binary search trees
 // Note that this class is not accessible outside
 // of this package.
-@SuppressWarnings("unchecked")
-class BinaryNode {
+
+class BinaryNode implements Serializable {
     // Constructors
     BinaryNode( Comparable theElement ) {
         element = theElement;
@@ -283,7 +283,6 @@ class BinaryNode {
  * in search tree insertions.
  * @author Mark Allen Weiss
  */
-@SuppressWarnings("serial")
 class DuplicateItemException extends RuntimeException {
     /**
      * Construct this exception object.
@@ -306,7 +305,6 @@ class DuplicateItemException extends RuntimeException {
  * trees, hash tables, and list and tree iterators.
  * @author Mark Allen Weiss
  */
-@SuppressWarnings("serial")
 class ItemNotFoundException extends RuntimeException {
     /**
      * Construct this exception object.

@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class AddressEntry implements Comparable<AddressEntry>{
+public class AddressEntry implements Comparable<AddressEntry>, Serializable{
 	private String name;
 	private String phone;
 	private String address;
