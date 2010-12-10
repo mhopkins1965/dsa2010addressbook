@@ -21,6 +21,9 @@ import java.io.Serializable;
  * Implements an unbalanced binary search tree.
  * Note that all "matching" is based on the compareTo method.
  * @author Mark Allen Weiss
+ * 
+ * 
+ * @Modified by Tom Renn
  */
 public class BinarySearchTree implements Serializable {
     /**
@@ -30,23 +33,131 @@ public class BinarySearchTree implements Serializable {
         root = null;
     }
     
-	/// TEST CODE RECURSIVE
-	public ArrayList<AddressEntry> inorder(BinaryNode root) {
-		
+    
+  /// TEST CODE RECURSIVE
+    public ArrayList<AddressEntry> inorder(BinaryNode root) {
+            
+            ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
+            
+            BinaryNode left = root.left;
+            BinaryNode right = root.right;
+            entries.add((AddressEntry)root.element);
+            
+            if(left != null)
+                    entries.addAll(inorder(left));
+            if(right != null)
+                    entries.addAll(inorder(right));
+            
+            return entries;
+            }
+    /// will evenutally get rid of this
+    
+    
+    /* INDIVIDUAL SEARCH METHODS */
+    
+    /**
+     * - Search for name
+     */
+    public Object[] searchName(String searchterm, boolean exact)
+	{
+    	// if we are looking for an excat name, we should use the find(comparable) in the binarySearchTree
+    	
+    	// else write a searchName
+		return null;
+	}
+    
+    
+    
+    /**
+     * - Search by Age
+     */
+    public Object[] searchAge(String searchterm, boolean exact)
+	{
+		return null;
+	}
+    /* No age yet implemented so we cannot write searchAge */
+    
+    /**
+     * 	- Search by Phone Numbers
+     * 
+     * @param searchterm Phone number to search
+     * @param exact If the phone should be an exact match
+     * @return Object[] of AddressEntry's
+     */
+	public Object[] searchPhone(String searchterm, boolean exact)
+	{
+		return findPhone(root, searchterm, exact).toArray();
+	}
+    
+	/**
+	 * - Recusively looks for AddressEntry's with particular phone number
+	 * @param root The AddressEntry to look at
+	 * @param searchterm Phone number to look for
+	 * @param exact If we should match the number excatly
+	 * @return ArrayList of AddressEntry's
+	 */
+    public ArrayList<AddressEntry> findPhone(BinaryNode root, String searchterm, boolean exact){
 		ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
 		
 		BinaryNode left = root.left;
 		BinaryNode right = root.right;
-		entries.add((AddressEntry)root.element);
+		
+		if (exact && ((AddressEntry)root.element).getPhone().equalsIgnoreCase(searchterm))
+			entries.add((AddressEntry)root.element);
+		if (!exact && ((AddressEntry)root.element).getPhone().contains(searchterm))
+			entries.add((AddressEntry)root.element);
 		
 		if(left != null)
-			entries.addAll(inorder(left));
+				entries.addAll(findPhone(left, searchterm, exact));
+		
+		// ----
 		if(right != null)
-			entries.addAll(inorder(right));
+				entries.addAll(findPhone(right, searchterm, exact));
+		
 		
 		return entries;
-		}
-
+    }
+   
+    
+    /**
+     * - Search by Address
+     * 
+     * @param searchterm Address to look for
+     * @param exact match the address excatly
+     * @return AddressEntry's that match
+     */
+    public Object[] searchAddress(String searchterm, boolean exact)
+	{
+		return findAddress(root, searchterm, exact).toArray();
+	}
+    
+    /**
+     *  - Recusively look for particular address entry
+     */
+    public ArrayList<AddressEntry> findAddress(BinaryNode root, String searchterm, boolean exact){
+		ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
+		
+		BinaryNode left = root.left;
+		BinaryNode right = root.right;
+		
+		if (exact && ((AddressEntry)root.element).getAddress().equalsIgnoreCase(searchterm))
+			entries.add((AddressEntry)root.element);
+		if (!exact && ((AddressEntry)root.element).getAddress().contains(searchterm))
+			entries.add((AddressEntry)root.element);
+		
+		if(left != null)
+				entries.addAll(findAddress(left, searchterm, exact));
+		
+		// ----
+		if(right != null)
+				entries.addAll(findAddress(right, searchterm, exact));
+		
+		
+		return entries;
+    }
+    
+    /* END OF SEARCH METHODS */
+    
     
     /**
      * Insert into the tree.

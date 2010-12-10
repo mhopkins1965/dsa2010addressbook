@@ -59,10 +59,12 @@ public class BookDisplay {
 	    list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 	    list.setLayoutOrientation(JList.VERTICAL_WRAP);
 	    list.setVisibleRowCount(-1);
+	    list.setSize(300, 10);
 	    contentPane.add(BorderLayout.CENTER, list);
 	    
 	    
 	    contentPane.add(BorderLayout.NORTH, label);
+	    contentPane.add(BorderLayout.WEST, new InfoPanel());
 	    frame.pack();
 	}
 	
