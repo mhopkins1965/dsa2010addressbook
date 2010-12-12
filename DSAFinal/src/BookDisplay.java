@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -12,12 +16,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerListModel;
 
 
 public class BookDisplay {
 	private JFrame frame;
+	private JButton addButton, editButton, removeButton;
+	private JComboBox searchSetting;
 	private Addressbook book;
 	
 	public static void main(String args[])
@@ -30,6 +38,32 @@ public class BookDisplay {
 		makeFrame();
 	}
 		
+	private void makeSidebar(){
+		addButton = new JButton("Add");
+		addButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		editButton = new JButton("Edit");
+		editButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		removeButton = new JButton("Remove");
+		removeButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		/* end of button setup */
+		String choices[] = {"Name", "Phone Number", "Address"};
+		searchSetting = new JComboBox(choices);
+		searchSetting.setMaximumSize(new Dimension(150, 100));
+		searchSetting.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		/* end of search menu setup */
+		
+		JPanel sidebar = new JPanel();
+		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+		sidebar.add(addButton);
+		sidebar.add(editButton);
+		sidebar.add(removeButton);
+		sidebar.add(Box.createVerticalGlue());
+		sidebar.add(new JLabel("Search by"));
+		sidebar.add(searchSetting);
+		
+		frame.getContentPane().add(sidebar, BorderLayout.EAST);
+	}
+	
 	public void makeFrame() {
 		book.addNewEntry("a", "dfd", "dfd");
 		book.addNewEntry("Tom Renn", "721", "blah");
@@ -39,8 +73,9 @@ public class BookDisplay {
 		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
 		
 	    frame = new JFrame("Address Book 0.5");
-	    frame.setMinimumSize(new Dimension(350, 300));
-//	    frame.setLocation(300,300);
+	    frame.setMinimumSize(new Dimension(420, 300));
+	    frame.setLocation(250, 150);
+	    frame.setPreferredSize(new Dimension(700, 400));
 	    frame.setVisible(true);
 	    
 	    makeMenuBar(frame);
@@ -65,9 +100,13 @@ public class BookDisplay {
 	    
 	    contentPane.add(BorderLayout.NORTH, label);
 	    contentPane.add(BorderLayout.WEST, new InfoPanel());
+	    
+	    makeSidebar();
+	    
 	    frame.pack();
 	}
 	
+	// setups the menu bar
 	private void makeMenuBar(JFrame frame) {
 		final int SHORTCUT_MASK =
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
