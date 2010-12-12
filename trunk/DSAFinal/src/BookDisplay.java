@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,15 +18,15 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSpinner;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
-import javax.swing.SpinnerListModel;
 
 
 public class BookDisplay {
 	private JFrame frame;
 	private JButton addButton, editButton, removeButton;
+	private JTextField searchbar;
 	private JComboBox searchSetting;
 	private Addressbook book;
 	
@@ -63,7 +65,7 @@ public class BookDisplay {
 		
 		frame.getContentPane().add(sidebar, BorderLayout.EAST);
 	}
-	
+	/* setup frame and other stuff */
 	public void makeFrame() {
 		book.addNewEntry("a", "dfd", "dfd");
 		book.addNewEntry("Tom Renn", "721", "blah");
@@ -83,7 +85,8 @@ public class BookDisplay {
 	    JPanel contentPane = (JPanel)frame.getContentPane();
 	    contentPane.setLayout(new BorderLayout());
 //	    JPanel tempPane = new JPanel(new FlowLayout());
-//	    
+	    /* InfoPanel creation */
+	    InfoPanel infopanel = new InfoPanel();
 	    JLabel label = new JLabel("Search or Add Address Book Entries!");
 	    label.setHorizontalAlignment(JLabel.CENTER);
 //	    tempPane.add(label);
@@ -91,22 +94,33 @@ public class BookDisplay {
 	    // LIST
 	    Object[] entries = book.getEntries();
 	    JList list = new JList(entries);
-	    list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+	    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 	    list.setLayoutOrientation(JList.VERTICAL_WRAP);
+	    AddressEntryListListener list_listener = new AddressEntryListListener(infopanel);
+	    list.addListSelectionListener(list_listener);
+	    
 	    list.setVisibleRowCount(-1);
 	    list.setSize(300, 10);
 	    contentPane.add(BorderLayout.CENTER, list);
 	    
 	    
 	    contentPane.add(BorderLayout.NORTH, label);
-	    contentPane.add(BorderLayout.WEST, new InfoPanel());
+	    contentPane.add(BorderLayout.WEST, infopanel);
 	    
+	    // searchbar
+	    searchbar = new JTextField(); 
+	    	JPanel searchPanel = new JPanel(new GridLayout(1, 3));
+	    	searchPanel.setSize(400, 30);
+	    	searchbar.setSize(400, 30);
+	    	searchPanel.add(new JLabel("Search Entries"));
+	    	searchPanel.add(searchbar);
+	    contentPane.add(BorderLayout.SOUTH, searchPanel);
 	    makeSidebar();
 	    
 	    frame.pack();
 	}
 	
-	// setups the menu bar
+	/* setups the menu bar */
 	private void makeMenuBar(JFrame frame) {
 		final int SHORTCUT_MASK =
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
