@@ -45,6 +45,9 @@ public class InfoPanel extends JPanel {
 	 */
 	public void setInfo(AddressEntry entry)
 	{
+		if(entry == null)
+			return;
+		
 		nameField.setText(entry.getName());
 		phoneField.setText(entry.getPhone());
 		addressField.setText(entry.getAddress());
