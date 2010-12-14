@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -17,6 +18,7 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -28,6 +30,8 @@ public class BookDisplay {
 	private JButton addButton, editButton, removeButton;
 	private JTextField searchbar;
 	private JComboBox searchSetting;
+	private JPanel contentPane;
+	private JList list;
 	private Addressbook book;
 	
 	public static void main(String args[])
@@ -41,26 +45,44 @@ public class BookDisplay {
 	}
 		
 	private void makeSidebar(){
+		JPanel sidebar = new JPanel();
+		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
+		
 		addButton = new JButton("Add");
 		addButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		addButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) { 
+								String name = JOptionPane.showInputDialog("Name: ");
+								String phone = "";
+								String address = "";
+								addEntry(name, phone, address); }
+						});
+		sidebar.add(addButton);
+		
 		editButton = new JButton("Edit");
 		editButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		editButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) { 
+								String name = "";
+								String phone = "";
+								String address = "";
+								editEntry(name, phone, address); }
+		});
+		sidebar.add(editButton);
+		
 		removeButton = new JButton("Remove");
 		removeButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		sidebar.add(removeButton);
 		/* end of button setup */
+		
 		String choices[] = {"Name", "Phone Number", "Address"};
 		searchSetting = new JComboBox(choices);
 		searchSetting.setMaximumSize(new Dimension(150, 100));
 		searchSetting.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		/* end of search menu setup */
 		
-		JPanel sidebar = new JPanel();
-		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-		sidebar.add(addButton);
-		sidebar.add(editButton);
-		sidebar.add(removeButton);
 		sidebar.add(Box.createVerticalGlue());
-		sidebar.add(new JLabel("Search by"));
+		sidebar.add(new JLabel("Search by:"));
 		sidebar.add(searchSetting);
 		
 		frame.getContentPane().add(sidebar, BorderLayout.EAST);
@@ -80,32 +102,19 @@ public class BookDisplay {
 	    frame.setPreferredSize(new Dimension(700, 400));
 	    frame.setVisible(true);
 	    
-	    makeMenuBar(frame);
+	    makeMenuBar();
 	    
-	    JPanel contentPane = (JPanel)frame.getContentPane();
+	    contentPane = (JPanel)frame.getContentPane();
 	    contentPane.setLayout(new BorderLayout());
 //	    JPanel tempPane = new JPanel(new FlowLayout());
-	    /* InfoPanel creation */
-	    InfoPanel infopanel = new InfoPanel();
+
 	    JLabel label = new JLabel("Search or Add Address Book Entries!");
 	    label.setHorizontalAlignment(JLabel.CENTER);
 //	    tempPane.add(label);
 	    
-	    // LIST
-	    Object[] entries = book.getEntries();
-	    JList list = new JList(entries);
-	    list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-	    list.setLayoutOrientation(JList.VERTICAL_WRAP);
-	    AddressEntryListListener list_listener = new AddressEntryListListener(infopanel);
-	    list.addListSelectionListener(list_listener);
-	    
-	    list.setVisibleRowCount(-1);
-	    list.setSize(300, 10);
-	    contentPane.add(BorderLayout.CENTER, list);
-	    
+	    updateList();
 	    
 	    contentPane.add(BorderLayout.NORTH, label);
-	    contentPane.add(BorderLayout.WEST, infopanel);
 	    
 	    // searchbar
 	    searchbar = new JTextField(); 
@@ -116,12 +125,11 @@ public class BookDisplay {
 	    	searchPanel.add(searchbar);
 	    contentPane.add(BorderLayout.SOUTH, searchPanel);
 	    makeSidebar();
-	    
 	    frame.pack();
 	}
 	
 	/* setups the menu bar */
-	private void makeMenuBar(JFrame frame) {
+	private void makeMenuBar() {
 		final int SHORTCUT_MASK =
             Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
 		
@@ -155,5 +163,33 @@ public class BookDisplay {
 	
 	private void quit() {
 		System.exit(0);
+	}
+	
+	private void addEntry(String name, String phone, String address) {
+		book.addNewEntry(name, phone, address);
+		updateList();
+	}
+	
+	private void editEntry(String name, String phone, String address) {
+		
+	}
+	
+	private void updateList() {
+		if(list == null) {
+			list = new JList();
+			InfoPanel infopanel = new InfoPanel();
+			list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		    list.setLayoutOrientation(JList.VERTICAL_WRAP);
+		    AddressEntryListListener list_listener = new AddressEntryListListener(infopanel);
+		    list.addListSelectionListener(list_listener);
+		    
+		    list.setVisibleRowCount(-1);
+		    list.setSize(300, 10);
+		    contentPane.add(BorderLayout.CENTER, list);
+		    contentPane.add(BorderLayout.WEST, infopanel);
+		}
+		
+		Object[] entries = book.getEntries();
+	    list.setListData(entries);
 	}
 }
