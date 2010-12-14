@@ -65,8 +65,9 @@ public class Addressbook {
 		}
 	}
 	
-	public boolean deleteEntry(String name)
+	public boolean deleteEntry(AddressEntry entry)
 	{
+		entries.remove(entry);
 		return false;
 	}
 	

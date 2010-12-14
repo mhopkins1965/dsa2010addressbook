@@ -67,11 +67,14 @@ public class BookDisplay {
 								String phone = "";
 								String address = "";
 								editEntry(name, phone, address); }
-		});
+						});
 		sidebar.add(editButton);
 		
 		removeButton = new JButton("Remove");
 		removeButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
+		removeButton.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) { removeEntry(); }
+						});
 		sidebar.add(removeButton);
 		/* end of button setup */
 		
@@ -172,6 +175,11 @@ public class BookDisplay {
 	
 	private void editEntry(String name, String phone, String address) {
 		
+	}
+	
+	private void removeEntry() {
+		book.deleteEntry((AddressEntry)list.getSelectedValue());
+		updateList();
 	}
 	
 	private void updateList() {
