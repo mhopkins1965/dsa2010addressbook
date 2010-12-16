@@ -29,6 +29,8 @@ public class Addressbook {
 		Object matches[] = null;
 		switch(SEARCH_FLAG){
 			case SEARCH_NAME:
+				matches = entries.searchName(searchterm, exact);
+				break;
 			case SEARCH_PHONE:
 				matches = entries.searchPhone(searchterm, exact);
 				break;

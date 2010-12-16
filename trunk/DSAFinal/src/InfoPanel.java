@@ -1,3 +1,4 @@
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.BorderFactory;
@@ -38,6 +39,7 @@ public class InfoPanel extends JPanel {
 		addressLabel.setFont(new Font(Font.DIALOG, Font.ITALIC, 14));
 		this.add(addressLabel);
 		this.add(addressField);
+		
 	}
 	
 	/**

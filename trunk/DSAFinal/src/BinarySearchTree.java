@@ -64,10 +64,30 @@ public class BinarySearchTree implements Serializable {
     	// if we are looking for an excat name, we should use the find(comparable) in the binarySearchTree
     	
     	// else write a searchName
-		return null;
+		return findName(root, searchterm, exact).toArray();
 	}
     
-    
+    public ArrayList<AddressEntry> findName(BinaryNode root, String searchterm, boolean exact){
+		ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
+		
+		BinaryNode left = root.left;
+		BinaryNode right = root.right;
+		
+		if (exact && ((AddressEntry)root.element).getName().equalsIgnoreCase(searchterm))
+			entries.add((AddressEntry)root.element);
+		if (!exact && ((AddressEntry)root.element).getName().toLowerCase().contains(searchterm.toLowerCase()))
+			entries.add((AddressEntry)root.element);
+		
+		if(left != null)
+				entries.addAll(findName(left, searchterm, exact));
+		
+		// ----
+		if(right != null)
+				entries.addAll(findName(right, searchterm, exact));
+		
+		
+		return entries;
+    }
     
     /**
      * - Search by Age
@@ -105,7 +125,7 @@ public class BinarySearchTree implements Serializable {
 		
 		if (exact && ((AddressEntry)root.element).getPhone().equalsIgnoreCase(searchterm))
 			entries.add((AddressEntry)root.element);
-		if (!exact && ((AddressEntry)root.element).getPhone().contains(searchterm))
+		if (!exact && ((AddressEntry)root.element).getPhone().toLowerCase().contains(searchterm.toLowerCase()))
 			entries.add((AddressEntry)root.element);
 		
 		if(left != null)
@@ -143,7 +163,7 @@ public class BinarySearchTree implements Serializable {
 		
 		if (exact && ((AddressEntry)root.element).getAddress().equalsIgnoreCase(searchterm))
 			entries.add((AddressEntry)root.element);
-		if (!exact && ((AddressEntry)root.element).getAddress().contains(searchterm))
+		if (!exact && ((AddressEntry)root.element).getAddress().toLowerCase().contains(searchterm.toLowerCase()))
 			entries.add((AddressEntry)root.element);
 		
 		if(left != null)

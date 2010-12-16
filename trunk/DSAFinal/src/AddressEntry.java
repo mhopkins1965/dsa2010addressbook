@@ -43,7 +43,7 @@ public class AddressEntry implements Comparable<AddressEntry>, Serializable{
 	
 	public String toString()
 	{
-		return name + "\t " + phone;
+		return name;
 	}
 
 	@Override
