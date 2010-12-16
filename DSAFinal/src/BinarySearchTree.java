@@ -24,6 +24,7 @@ import java.io.Serializable;
  * 
  * 
  * @Modified by Tom Renn
+ * Included Searches by name/address/phone_number of AddressEntry's
  */
 public class BinarySearchTree implements Serializable {
     /**
@@ -35,7 +36,7 @@ public class BinarySearchTree implements Serializable {
     
     
   /// TEST CODE RECURSIVE
-    public ArrayList<AddressEntry> inorder(BinaryNode root) {
+    public ArrayList<AddressEntry> preorder(BinaryNode root) {
             
             ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
             
@@ -44,9 +45,9 @@ public class BinarySearchTree implements Serializable {
             entries.add((AddressEntry)root.element);
             
             if(left != null)
-                    entries.addAll(inorder(left));
+                    entries.addAll(preorder(left));
             if(right != null)
-                    entries.addAll(inorder(right));
+                    entries.addAll(preorder(right));
             
             return entries;
             }

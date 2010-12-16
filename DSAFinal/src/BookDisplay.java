@@ -1,24 +1,25 @@
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -43,40 +44,41 @@ public class BookDisplay {
 		book = new Addressbook();
 		makeFrame();
 	}
-		
+	
+	/**
+	 * Creates the right hand sidebar. Includes add, edit, remove buttons and search specifier
+	 */
 	private void makeSidebar(){
 		JPanel sidebar = new JPanel();
 		sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-		
+			/* Add Button */
 		addButton = new JButton("Add");
 		addButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		addButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) { 
-								String name = JOptionPane.showInputDialog("Name: ");
-								String phone = "";
-								String address = "";
-								addEntry(name, phone, address); }
+								JDialog dialog = new NewEntryDialog(BookDisplay.this, book);
+								dialog.setVisible(true);
+								}
 						});
 		sidebar.add(addButton);
-		
+			/* Edit Button */
 		editButton = new JButton("Edit");
 		editButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		editButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) { 
-								String name = "";
-								String phone = "";
-								String address = "";
-								editEntry(name, phone, address); }
+								JDialog dialog = new NewEntryDialog(BookDisplay.this, book, (AddressEntry)list.getSelectedValue());
+								dialog.setVisible(true); 
+								}
 						});
 		sidebar.add(editButton);
-		
+			/* Remove Button */
 		removeButton = new JButton("Remove");
 		removeButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		removeButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) { removeEntry(); }
 						});
 		sidebar.add(removeButton);
-		/* end of button setup */
+		/*-------- Add/Edit/Remove buttons ------------*/
 		
 		String choices[] = {"Name", "Phone Number", "Address"};
 		searchSetting = new JComboBox(choices);
@@ -85,25 +87,41 @@ public class BookDisplay {
 		/* end of search menu setup */
 		
 		sidebar.add(Box.createVerticalGlue());
-		sidebar.add(new JLabel("Search by:"));
+		sidebar.add(new JLabel("Search by "));
 		sidebar.add(searchSetting);
 		
 		frame.getContentPane().add(sidebar, BorderLayout.EAST);
 	}
-	/* setup frame and other stuff */
+	
+	/** Creates the basic setup and attempts to fill in starting data
+	 * 
+	 */
 	public void makeFrame() {
-		book.addNewEntry("a", "dfd", "dfd");
-		book.addNewEntry("Tom Renn", "721", "blah");
-		book.addNewEntry("Phil Apple", "dfdf", "dfdf");
-		book.addNewEntry(" appled", "dfd", "fdf");
-		book.addNewEntry("Ed Springer", "322", "meh");
-		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
+//		book.addNewEntry("a", "dfd", "dfd");
+//		book.addNewEntry("Tom Renn", "721", "blah");
+//		book.addNewEntry("Phil Apple", "dfdf", "dfdf");
+//		book.addNewEntry(" appled", "dfd", "fdf");
+//		book.addNewEntry("Ed Springer", "322", "meh");
+//		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
 		
 	    frame = new JFrame("Address Book 0.5");
 	    frame.setMinimumSize(new Dimension(420, 300));
 	    frame.setLocation(250, 150);
 	    frame.setPreferredSize(new Dimension(700, 400));
 	    frame.setVisible(true);
+	    frame.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				updateList();
+			}
+		});
 	    
 	    makeMenuBar();
 	    
@@ -182,7 +200,7 @@ public class BookDisplay {
 		updateList();
 	}
 	
-	private void updateList() {
+	public void updateList() {
 		if(list == null) {
 			list = new JList();
 			InfoPanel infopanel = new InfoPanel();
