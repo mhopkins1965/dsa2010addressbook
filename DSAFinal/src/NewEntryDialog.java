@@ -66,7 +66,7 @@ public class NewEntryDialog extends JDialog implements ActionListener{
 			entry.setPhone(phoneField.getText());
 			entry.setAddress(addressField.getText());
 		}
-		display.updateList();
+		display.updateList(null);
 		this.dispose();
 	}
 	

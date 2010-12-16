@@ -24,9 +24,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 
-public class BookDisplay {
+public class BookDisplay implements DocumentListener {
 	private JFrame frame;
 	private JButton addButton, editButton, removeButton;
 	private JTextField searchbar;
@@ -97,12 +99,24 @@ public class BookDisplay {
 	 * 
 	 */
 	public void makeFrame() {
-//		book.addNewEntry("a", "dfd", "dfd");
-//		book.addNewEntry("Tom Renn", "721", "blah");
-//		book.addNewEntry("Phil Apple", "dfdf", "dfdf");
-//		book.addNewEntry(" appled", "dfd", "fdf");
-//		book.addNewEntry("Ed Springer", "322", "meh");
-//		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
+		book.addNewEntry("a", "dfd", "dfd");
+		book.addNewEntry("Tom Renn", "721", "blah");
+		book.addNewEntry("Phil Apple", "dfdf", "dfdf");
+		book.addNewEntry(" appled", "dfd", "fdf");
+		book.addNewEntry(" app22led", "dfd", "fdf");
+		book.addNewEntry(" appd1led", "dfd", "fdf");
+		book.addNewEntry(" apapled", "dfd", "fdf");
+		book.addNewEntry(" appddled", "dfd", "fdf");
+		book.addNewEntry(" appbled", "dfd", "fdf");
+		book.addNewEntry(" appeled", "dfd", "fdf");
+		book.addNewEntry(" appfffled", "dfd", "fdf");
+		book.addNewEntry(" apapled", "dfd", "fdf");
+		book.addNewEntry(" ap3pled", "dfd", "fdf");
+		book.addNewEntry(" app2led", "dfd", "fdf");
+		book.addNewEntry(" ap1pled", "dfd", "fdf");
+		
+		book.addNewEntry("Ed Springer", "322", "meh");
+		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
 		
 	    frame = new JFrame("Address Book 0.5");
 	    frame.setMinimumSize(new Dimension(420, 300));
@@ -119,7 +133,7 @@ public class BookDisplay {
 			
 			@Override
 			public void focusGained(FocusEvent e) {
-				updateList();
+				updateList(null);
 			}
 		});
 	    
@@ -133,7 +147,7 @@ public class BookDisplay {
 	    label.setHorizontalAlignment(JLabel.CENTER);
 //	    tempPane.add(label);
 	    
-	    updateList();
+	    updateList(null);
 	    
 	    contentPane.add(BorderLayout.NORTH, label);
 	    
@@ -144,6 +158,7 @@ public class BookDisplay {
 	    	searchbar.setSize(400, 30);
 	    	searchPanel.add(new JLabel("Search Entries"));
 	    	searchPanel.add(searchbar);
+	    searchbar.getDocument().addDocumentListener(this);
 	    contentPane.add(BorderLayout.SOUTH, searchPanel);
 	    makeSidebar();
 	    frame.pack();
@@ -188,7 +203,7 @@ public class BookDisplay {
 	
 	private void addEntry(String name, String phone, String address) {
 		book.addNewEntry(name, phone, address);
-		updateList();
+		updateList(null);
 	}
 	
 	private void editEntry(String name, String phone, String address) {
@@ -197,10 +212,11 @@ public class BookDisplay {
 	
 	private void removeEntry() {
 		book.deleteEntry((AddressEntry)list.getSelectedValue());
-		updateList();
+		updateList(null);
 	}
 	
-	public void updateList() {
+	// update the list with the given entries, if null is given, all entries are displayed
+	public void updateList(Object[] entries) {
 		if(list == null) {
 			list = new JList();
 			InfoPanel infopanel = new InfoPanel();
@@ -215,7 +231,30 @@ public class BookDisplay {
 		    contentPane.add(BorderLayout.WEST, infopanel);
 		}
 		
-		Object[] entries = book.getEntries();
+		if (entries == null)
+			entries = book.getEntries();
 	    list.setListData(entries);
 	}
+
+	/* Methods for search box listening */
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		
+		updateList(book.search(searchbar.getText(), searchSetting.getSelectedIndex(), false));
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		updateList(book.search(searchbar.getText(), searchSetting.getSelectedIndex(), false));
+		
+	}
+	/* ------------------ end of search box document listening */
+	
+
 }
