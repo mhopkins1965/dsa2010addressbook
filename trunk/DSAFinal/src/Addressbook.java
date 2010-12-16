@@ -47,7 +47,7 @@ public class Addressbook {
 	
 	public Object[] getEntries()
 	{
-		ArrayList<AddressEntry> abc = entries.inorder(entries.root);
+		ArrayList<AddressEntry> abc = entries.preorder(entries.root);
 		return abc.toArray();
 	}
 
@@ -85,13 +85,13 @@ public class Addressbook {
 		
 		Addressbook book = new Addressbook();
 //		book.addNewEntry("Tom Renn", "732", "24 mirta");
-		book.addNewEntry("Frank Kempter", "732", "wewer");
-		book.addNewEntry("Tom Renn", "732", "24 mirta");
-		book.addNewEntry("Ed Springer", "73245", "233 cort");
-		
-		book.addNewEntry("Kurt Cal", "21173221", "werer");
-		book.addNewEntry("Zack Galifahacks", "2211", "23439");
-		book.addNewEntry("Tim cost", "22", "werebLAWERH");
+//		book.addNewEntry("Frank Kempter", "732", "wewer");
+//		book.addNewEntry("Tom Renn", "732", "24 mirta");
+//		book.addNewEntry("Ed Springer", "73245", "233 cort");
+//		
+//		book.addNewEntry("Kurt Cal", "21173221", "werer");
+//		book.addNewEntry("Zack Galifahacks", "2211", "23439");
+//		book.addNewEntry("Tim cost", "22", "werebLAWERH");
 		
 		Object entries[] = book.search("we", Addressbook.SEARCH_ADDRESS, false);
 		for (int i=0; i<entries.length; i++)
