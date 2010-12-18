@@ -26,17 +26,18 @@ public class InfoPanel extends JPanel {
 		
 		this.add(Box.createVerticalStrut(20));
 		JLabel nameLabel = new JLabel("Name"); 
-		nameLabel.setFont(new Font(Font.DIALOG, Font.ITALIC, 14));
+		Font titleFont = new Font(Font.DIALOG, Font.ITALIC, 14);
+		nameLabel.setFont(titleFont);
 		this.add(nameLabel);
 		this.add(nameField);
 		this.add(Box.createVerticalStrut(20));
 		JLabel phoneLabel = new JLabel("Phone Number"); 
-		phoneLabel.setFont(new Font(Font.DIALOG, Font.ITALIC, 14));
+		phoneLabel.setFont(titleFont);
 		this.add(phoneLabel);
 		this.add(phoneField);
 		this.add(Box.createVerticalStrut(20));
 		JLabel addressLabel = new JLabel("Address");
-		addressLabel.setFont(new Font(Font.DIALOG, Font.ITALIC, 14));
+		addressLabel.setFont(titleFont);
 		this.add(addressLabel);
 		this.add(addressField);
 		
