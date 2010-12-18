@@ -45,6 +45,8 @@ public class BookDisplay implements DocumentListener {
 	public BookDisplay() {
 		book = new Addressbook();
 		makeFrame();
+		HelpDialog h = new HelpDialog(); /////////////////////////vvvvvvvvvvvvvvvvvvv////////////////
+		h.setVisible(true);////////////////////////////////////// testing help dialog
 	}
 	
 	/**
