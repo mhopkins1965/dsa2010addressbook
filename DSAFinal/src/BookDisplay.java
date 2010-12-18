@@ -193,26 +193,22 @@ public class BookDisplay implements DocumentListener {
 		menu.add(item);
 	}
 	
+	// save the address book
 	private void save() {
 		book.save();
 	}
 	
+	// quit the program
 	private void quit() {
 		System.exit(0);
 	}
 	
-	private void addEntry(String name, String phone, String address) {
-		book.addNewEntry(name, phone, address);
-		updateList(null);
-	}
-	
-	private void editEntry(String name, String phone, String address) {
-		
-	}
-	
+	// removes an entry if one is selected
 	private void removeEntry() {
-		book.deleteEntry((AddressEntry)list.getSelectedValue());
-		updateList(null);
+		if (list.getSelectedValue() != null){
+			book.deleteEntry((AddressEntry)list.getSelectedValue());
+			updateList(null);
+		}
 	}
 	
 	// update the list with the given entries, if null is given, all entries are displayed

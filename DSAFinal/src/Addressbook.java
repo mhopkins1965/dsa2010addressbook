@@ -62,7 +62,7 @@ public class Addressbook {
 		}
 		catch (DuplicateItemException e)
 		{
-			System.out.println("Entry already exists");
+//			System.out.println("Entry already exists");
 			return false; // entry already exists in address book
 		}
 	}
