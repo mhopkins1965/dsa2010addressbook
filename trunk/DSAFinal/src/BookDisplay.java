@@ -36,6 +36,7 @@ public class BookDisplay implements DocumentListener {
 	private JPanel contentPane;
 	private JList list;
 	private Addressbook book;
+	private HelpDialog helpDialog;
 	
 	public static void main(String args[])
 	{
@@ -45,8 +46,7 @@ public class BookDisplay implements DocumentListener {
 	public BookDisplay() {
 		book = new Addressbook();
 		makeFrame();
-		HelpDialog h = new HelpDialog(); /////////////////////////vvvvvvvvvvvvvvvvvvv////////////////
-		h.setVisible(true);////////////////////////////////////// testing help dialog
+		helpDialog = new HelpDialog(); /////////////////////////vvvvvvvvvvvvvvvvvvv////////////////
 	}
 	
 	/**
@@ -193,6 +193,16 @@ public class BookDisplay implements DocumentListener {
 								public void actionPerformed(ActionEvent e) { quit(); }
 							});
 		menu.add(item);
+		
+		menu = new JMenu("Help");
+		menubar.add(menu);
+		
+		item = new JMenuItem("About");
+		item.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_H, SHORTCUT_MASK));
+		item.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) { showHelp(); }
+							});
+		menu.add(item);
 	}
 	
 	// save the address book
@@ -203,6 +213,11 @@ public class BookDisplay implements DocumentListener {
 	// quit the program
 	private void quit() {
 		System.exit(0);
+	}
+	
+	// show the help dialog box
+	private void showHelp() {
+		helpDialog.setVisible(true);
 	}
 	
 	// removes an entry if one is selected

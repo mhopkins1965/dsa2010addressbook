@@ -48,6 +48,5 @@ public class HelpDialog extends JDialog{
 		this.add(title);
 		this.add(new JLabel("Before you edit an entry you must select the entry you wish to edit. You will" +
 				" not be able to make changes to the edited entry if you change the name to one already existing"));
-		
 	}
 }
