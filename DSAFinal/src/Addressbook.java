@@ -1,7 +1,10 @@
 import java.io.ObjectInputStream.GetField;
 import java.util.ArrayList;
 
-
+/**
+ * Holds all the AddressEntry's for contacts
+ *
+ */
 public class Addressbook {
 	private BinarySearchTree entries;
 	public static final int SEARCH_NAME = 0;
@@ -43,17 +46,13 @@ public class Addressbook {
 		return matches;
 	}
 	
-	public AddressEntry getEntry(){
-		return null;
-	}
-	
+	// a basic method to get all entries 
 	public Object[] getEntries()
 	{
 		ArrayList<AddressEntry> abc = entries.preorder(entries.root);
 		return abc.toArray();
 	}
 
-		
 	// adds new entry to address book or returns false if unable to
 	public boolean addNewEntry(String name, String phone, String address){
 		try{
@@ -62,42 +61,19 @@ public class Addressbook {
 		}
 		catch (DuplicateItemException e)
 		{
-//			System.out.println("Entry already exists");
 			return false; // entry already exists in address book
 		}
 	}
 	
-	public boolean deleteEntry(AddressEntry entry)
+	// delete an Entry but giving the entry wanted to delete
+	public void deleteEntry(AddressEntry entry)
 	{
 		entries.remove(entry);
-		return false;
 	}
 	
-	public AddressEntry searchAddressbook(String name)
-	{
-		return (AddressEntry)entries.find(new AddressEntry(name, null, null));
-	}
-	
+	// save the BinarySearchTree of entries
 	public void save() {
 		SerializationHandler.serialize(entries);
-	}
-	
-	public static void main(String args[])
-	{
-		
-		Addressbook book = new Addressbook();
-//		book.addNewEntry("Tom Renn", "732", "24 mirta");
-//		book.addNewEntry("Frank Kempter", "732", "wewer");
-//		book.addNewEntry("Tom Renn", "732", "24 mirta");
-//		book.addNewEntry("Ed Springer", "73245", "233 cort");
-//		
-//		book.addNewEntry("Kurt Cal", "21173221", "werer");
-//		book.addNewEntry("Zack Galifahacks", "2211", "23439");
-//		book.addNewEntry("Tim cost", "22", "werebLAWERH");
-		
-		Object entries[] = book.search("we", Addressbook.SEARCH_ADDRESS, false);
-		for (int i=0; i<entries.length; i++)
-			System.out.print(" " + entries[i].toString() +"\n");
 	}
 	
 }

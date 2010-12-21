@@ -36,17 +36,16 @@ public class BookDisplay implements DocumentListener {
 	private JPanel contentPane;
 	private JList list;
 	private Addressbook book;
-	private HelpDialog helpDialog;
 	
+	// driver
 	public static void main(String args[])
 	{
 		BookDisplay display = new BookDisplay();
 	}
-	
+	// contructor
 	public BookDisplay() {
 		book = new Addressbook();
 		makeFrame();
-		helpDialog = new HelpDialog(); /////////////////////////vvvvvvvvvvvvvvvvvvv////////////////
 	}
 	
 	/**
@@ -70,9 +69,11 @@ public class BookDisplay implements DocumentListener {
 		editButton.setAlignmentX(JButton.CENTER_ALIGNMENT);
 		editButton.addActionListener(new ActionListener() {
 							public void actionPerformed(ActionEvent e) { 
-								JDialog dialog = new NewEntryDialog(BookDisplay.this, book, (AddressEntry)list.getSelectedValue());
-								dialog.setVisible(true); 
+								if (list.getSelectedIndex() != -1){
+									JDialog dialog = new NewEntryDialog(BookDisplay.this, book, (AddressEntry)list.getSelectedValue());
+									dialog.setVisible(true); 
 								}
+							}
 						});
 		sidebar.add(editButton);
 			/* Remove Button */
@@ -217,6 +218,7 @@ public class BookDisplay implements DocumentListener {
 	
 	// show the help dialog box
 	private void showHelp() {
+		HelpDialog helpDialog = new HelpDialog();
 		helpDialog.setVisible(true);
 	}
 	
@@ -249,19 +251,21 @@ public class BookDisplay implements DocumentListener {
 	    list.setListData(entries);
 	}
 
-	/* Methods for search box listening */
+	/* Methods for search box listening
+	 * Overrides needed methods for DocumentListener  */
+	// when attributes change
 	@Override
 	public void changedUpdate(DocumentEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
-
+	// when new character is entered
 	@Override
 	public void insertUpdate(DocumentEvent e) {
 		
 		updateList(book.search(searchbar.getText(), searchSetting.getSelectedIndex(), false));
 	}
-
+	// when character is removed
 	@Override
 	public void removeUpdate(DocumentEvent e) {
 		updateList(book.search(searchbar.getText(), searchSetting.getSelectedIndex(), false));

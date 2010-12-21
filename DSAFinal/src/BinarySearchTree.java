@@ -1,22 +1,6 @@
 import java.util.ArrayList;
 import java.io.Serializable;
 
-// BinarySearchTree class
-//
-// CONSTRUCTION: with no initializer
-//
-// ******************PUBLIC OPERATIONS*********************
-// void insert( x )       --> Insert x
-// void remove( x )       --> Remove x
-// void removeMin( )      --> Remove minimum item
-// Comparable find( x )   --> Return item that matches x
-// Comparable findMin( )  --> Return smallest item
-// Comparable findMax( )  --> Return largest item
-// boolean isEmpty( )     --> Return true if empty; else false
-// void makeEmpty( )      --> Remove all items
-// ******************ERRORS********************************
-// Exceptions are thrown by insert, remove, and removeMin if warranted
-
 /**
  * Implements an unbalanced binary search tree.
  * Note that all "matching" is based on the compareTo method.
@@ -25,6 +9,8 @@ import java.io.Serializable;
  * 
  * @Modified by Tom Renn
  * Included Searches by name/address/phone_number of AddressEntry's
+ * AddressEntry implements Comparable and compares the name of the AddressEntry. 
+ * 		Thus BinarySearchTree is sorted by the names of the AddressEntry
  */
 public class BinarySearchTree implements Serializable {
     /**
@@ -35,7 +21,7 @@ public class BinarySearchTree implements Serializable {
     }
     
     
-  /// TEST CODE RECURSIVE
+  /// get all the entries starting from the root node
     public ArrayList<AddressEntry> preorder(BinaryNode root) {
             
             ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
@@ -51,8 +37,6 @@ public class BinarySearchTree implements Serializable {
             
             return entries;
             }
-    /// will evenutally get rid of this
-    
     
     /* INDIVIDUAL SEARCH METHODS */
     
@@ -61,12 +45,10 @@ public class BinarySearchTree implements Serializable {
      */
     public Object[] searchName(String searchterm, boolean exact)
 	{
-    	// if we are looking for an excat name, we should use the find(comparable) in the binarySearchTree
-    	
-    	// else write a searchName
 		return findName(root, searchterm, exact).toArray();
 	}
     
+    // goes through the tree to find matching names
     public ArrayList<AddressEntry> findName(BinaryNode root, String searchterm, boolean exact){
 		ArrayList<AddressEntry> entries = new ArrayList<AddressEntry>();
 		

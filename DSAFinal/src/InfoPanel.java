@@ -8,10 +8,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
 
-
+// displays info about selected address entries
 public class InfoPanel extends JPanel {
 	JLabel nameField, phoneField, addressField;
 	
+	// constructor
 	public InfoPanel(){
 		nameField = new JLabel();
 		phoneField = new JLabel();

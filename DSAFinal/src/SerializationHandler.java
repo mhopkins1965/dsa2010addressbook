@@ -4,9 +4,11 @@ import java.io.ObjectInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+// handler for saving and restoring serializied objects
 public class SerializationHandler {
 	private static final String filename = "binarytree.ser";
 	
+	// method to serialize
 	public static void serialize(BinarySearchTree binarySearchTree) {
 		FileOutputStream fos = null;
 		ObjectOutputStream out = null;
@@ -22,6 +24,7 @@ public class SerializationHandler {
 		}
 	}
 	
+	// create object from serialized file
 	public static BinarySearchTree deserialize() {
 		BinarySearchTree binarySearchTree = null;
 		FileInputStream fis = null;

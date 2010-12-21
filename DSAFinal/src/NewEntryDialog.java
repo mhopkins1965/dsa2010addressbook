@@ -22,6 +22,7 @@ public class NewEntryDialog extends JDialog implements ActionListener{
 	private JButton addButton, cancelButton;
 	private BookDisplay display;
 	
+	// constructor
 	public NewEntryDialog(BookDisplay display, Addressbook book) {
 		addressbook = book;
 		this.display = display;
