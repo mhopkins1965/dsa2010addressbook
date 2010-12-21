@@ -12,9 +12,15 @@ public class Addressbook {
 	public static final int SEARCH_ADDRESS = 2;
 	public static final int SEARCH_AGE = 3;
 	
+	// constructor
 	public Addressbook(){
-		if(SerializationHandler.deserialize() == null)
+		if(SerializationHandler.deserialize() == null){ // if there is no save, create some filler entries
 			entries = new BinarySearchTree();
+			addNewEntry("Tom Renn", "7325510804", "14 Mirta Ct");
+			addNewEntry("Edward Springer", "7325555555", "101 Redmond Ave");
+			addNewEntry("John Smith", "9285111111", "Outer Space");
+			addNewEntry("Kevin Flynn", "07091982", "The Game Grid");
+		}
 		else
 			entries = SerializationHandler.deserialize();
 	}
