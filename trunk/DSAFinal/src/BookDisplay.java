@@ -102,24 +102,6 @@ public class BookDisplay implements DocumentListener {
 	 * 
 	 */
 	public void makeFrame() {
-		book.addNewEntry("a", "dfd", "dfd");
-		book.addNewEntry("Tom Renn", "721", "blah");
-		book.addNewEntry("Phil Apple", "dfdf", "dfdf");
-		book.addNewEntry(" appled", "dfd", "fdf");
-		book.addNewEntry(" app22led", "dfd", "fdf");
-		book.addNewEntry(" appd1led", "dfd", "fdf");
-		book.addNewEntry(" apapled", "dfd", "fdf");
-		book.addNewEntry(" appddled", "dfd", "fdf");
-		book.addNewEntry(" appbled", "dfd", "fdf");
-		book.addNewEntry(" appeled", "dfd", "fdf");
-		book.addNewEntry(" appfffled", "dfd", "fdf");
-		book.addNewEntry(" apapled", "dfd", "fdf");
-		book.addNewEntry(" ap3pled", "dfd", "fdf");
-		book.addNewEntry(" app2led", "dfd", "fdf");
-		book.addNewEntry(" ap1pled", "dfd", "fdf");
-		
-		book.addNewEntry("Ed Springer", "322", "meh");
-		book.addNewEntry("Billy Bob Thornton", "5555555555", "Hollywood");
 		
 	    frame = new JFrame("Address Book 0.5");
 	    frame.setMinimumSize(new Dimension(420, 300));

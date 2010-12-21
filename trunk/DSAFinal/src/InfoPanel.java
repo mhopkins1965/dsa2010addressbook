@@ -21,9 +21,9 @@ public class InfoPanel extends JPanel {
 		BoxLayout layout = new BoxLayout(this, BoxLayout.Y_AXIS);
 		this.setLayout(layout);
 		this.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-		nameField.setText("Enter your name here bitch");
-		phoneField.setText("Enter your phone here");
-		addressField.setText("Enter your address here");
+		nameField.setText("Contact name displayed here");
+		phoneField.setText("Contact phone displayed here");
+		addressField.setText("Contact address displayed here");
 		
 		this.add(Box.createVerticalStrut(20));
 		JLabel nameLabel = new JLabel("Name"); 
