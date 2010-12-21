@@ -4,6 +4,20 @@ import java.util.ArrayList;
 /**
  * Holds all the AddressEntry's for contacts
  *
+ **
+ * Authors:     Thomas F. Renn, Edward H. Springer
+ * Date:       Tuesday, December 21, 2010
+ * Course:     Data Structures (CS260) 
+ * File:       Addressbook.java
+ * Purpose:    Holds the entries for the BookDisplay
+ * Known bugs: None 
+ * Compiler:   Java 6
+ * Operating System: 
+ *             Windows 7 
+ * Special Instructions: 
+ *             None 
+ * E-mail:     rennt79@students.rowan.edu,
+ * 			   spring72@students.rowan.edu
  */
 public class Addressbook {
 	private BinarySearchTree entries;
